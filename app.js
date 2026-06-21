@@ -7,6 +7,7 @@ const morgan = require('morgan');
 
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth.routes');
+const categoryRoutes = require('./routes/category.routes');
 
 const app = express();
 
@@ -16,10 +17,12 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/categories', categoryRoutes);
 
 app.get('/', (req, res) => {
     res.send('Library API Running');
 });
+
 
 const PORT = process.env.PORT || 5000;
 
