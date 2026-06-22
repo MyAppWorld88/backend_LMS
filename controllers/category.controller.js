@@ -16,7 +16,7 @@ const createCategory = async (req, res) => {
 
         const existingCategory = await Category.findOne({
             libraryId: req.user.libraryId,
-            name: name.trim()
+            name: name.trim().toLowerCase()
         });
 
         if (existingCategory) {
@@ -111,6 +111,13 @@ const updateCategory = async (req, res) => {
     } catch (error) {
 
         console.error(error);
+      if (error.code === 11000) {
+        return res.status(400).json({
+            success: false,
+            message: 'Category already exists'
+        });
+    }
+
 
         return res.status(500).json({
             success: false,
